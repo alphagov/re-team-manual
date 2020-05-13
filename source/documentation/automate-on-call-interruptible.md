@@ -88,16 +88,8 @@ Some useful links:
 
 #### Interruptible
 
-The most common task are the [UKCloud and Carrenza machine
-reboots](https://verify-team-manual.cloudapps.digital/documentation/support/dcs/rolling-reboots.html).
-Other notable items include available disk space on packages-1, sensu alerts
-(both low-side and high-side) and other general escalations from the yak team or
-the Verify devs.
-
-Useful links:
-
-* [verify-ansible repository](https://github.com/alphagov/verify-ansible)
-* [verify-dashing repository](https://github.com/alphagov/verify-dashing)
+The most common tasks are general escalations from the Verify yak team or the
+Verify devs.
 
 ### Proxy Node
 
@@ -132,7 +124,6 @@ confidence that the alerting system is functioning correctly.
 Other "misc" infrastructure for Verify is supported in-hours:
 
 * AWS tools environment which includes concourse, motomo, dash etc.
-* UKCloud components such as artifactory and jenkins
 
 Relevant gds-cli aws account names:
 
