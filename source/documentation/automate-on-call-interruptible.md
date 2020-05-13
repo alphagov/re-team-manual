@@ -88,8 +88,7 @@ Some useful links:
 
 #### Interruptible
 
-The most common tasks are general escalations from the Verify yak team or the
-Verify devs.
+The most common tasks are general escalations from the Verify yak team or the Verify devs.
 
 ### Proxy Node
 
