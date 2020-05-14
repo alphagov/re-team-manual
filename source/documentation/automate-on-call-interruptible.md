@@ -233,7 +233,17 @@ When applying the multi-tenant concourse terraform (from `tech-ops-private` `rel
 
 These should be fine. The AMI changes should roll out when the main team's roll-instances pipeline jobs run on the next weekday morning.
 
-### Creating a new team
+### Interruptible
+
+#### Troubleshooting pending builds
+
+Sometimes a team's pipeline will have jobs get stuck in a pending state and not run.
+
+You can check that their workers are working okay by running other jobs (e.g. the info pipeline should be working). If this does not work, you may want to check that the team has healthy workers, you can see whether a worker is stalled or running by looking at `fly -t cd-main workers`. (`main` in this command can be replaced with any other team name, it is only used to find the correct Concourse instance, the team does not matter, all teams workers will be shown).
+
+Otherwise, the cause of the issue might be [an upstream bug](https://github.com/concourse/concourse/issues/844#issuecomment-416745367). The normal workaround for this seems to be deleting (`fly -t cd-team-name destroy-pipeline -p bad-pipeline`) and re-creating (`fly -t cd-team-name set-pipeline -p bad-pipeline -c pipeline.yml`) the pipeline - but note it may be advisable to run set-pipeline first to look at the diff you'll be creating when you set the pipeline again - it may be necessary to set variables, and pipelines that self-update should contain some clues as to where to get those variables from. This process should be performable by the affected team.
+
+#### Creating a new team
 
 These are requested by PR in the `tech-ops-private` repository, which is available to everyone in the alphagov GitHub organisation:
 
