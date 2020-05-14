@@ -23,8 +23,8 @@ Figure 1: Architecture for components hosted on AWS
 - Each Prometheus sends their alerts to all three of the Alertmanagers.
 - Configuration for Prometheus is provided in YAML files which are
   stored in an S3 bucket.
-- Deployment is manual, by running the terraform in
-  [prometheus-aws-configuration-beta][]
+- Changes to the [configuration][prometheus-aws-configuration-beta] are continuously deployed via the [prometheus pipeline][].
+
 
 [prom-1]: https://prom-1.monitoring.gds-reliability.engineering/
 [prom-2]: https://prom-2.monitoring.gds-reliability.engineering/
