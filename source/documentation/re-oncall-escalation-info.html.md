@@ -124,7 +124,7 @@ PagerDuty](https://governmentdigitalservice.pagerduty.com/users/PAEQAD2)
 
 ### Third party providers
 
-AWS Technical Account Manager (TAM): James Lambert jamlam@amazon.co.uk
+AWS Technical Account Manager (TAM): Chris Pates crpates@amazon.co.uk 
 
 Service requests can be raised through [the AWS
 console](https://console.aws.amazon.com). Any requests raised as 'critical' or
