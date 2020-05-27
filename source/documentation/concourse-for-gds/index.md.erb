@@ -1,0 +1,93 @@
+Reliability Engineering operates a continuous integration / continuous
+deployment (CI/CD) service based on [Concourse][concourse] for GDS tenants, and
+are responsible for the support and reliability of the service.
+
+The service is known informally as the "shared concourse", "multi-tenant
+concourse" or "big concourse" and can be accessed at the following URL with a
+valid github login.
+
+[https://cd.gds-reliability.engineering/][cd]
+
+
+## Architecture
+
+Concourse is made up of two major components:
+
+* The `web` components (api, authentication, user interface, task scheduling)
+* The `worker` components (job container execution runtime)
+
+All components are deployed as EC2 instances in AWS.
+
+For more details on the inner workings of these major components refer to the
+[concourse internals][internals] documentation.
+
+Concourse has a concept of teams to provide some level of isolation between
+pipeline execution.
+
+In our deployment we give each team it's own dedicated set of worker
+components.
+
+For details of design decisions and history of the project please see the
+[reliability-engineering ADR documentation][adrs]
+
+## Deployment
+
+Deployment is described by terraform with changes continuously deployed on merge to master.
+
+There are two terraform projects:
+
+* [cd-staging](https://github.com/alphagov/tech-ops-private/tree/master/reliability-engineering/terraform/deployments/gds-tech-ops/cd-staging): The test/staging deployment
+* [cd-production](https://github.com/alphagov/tech-ops-private/tree/master/reliability-engineering/terraform/deployments/gds-tech-ops/cd): The production deployment
+
+Each deployment has a deployment pipeline in it's `main` team that allows the
+concourse to continuously deploy itself. These can be found at the following:
+
+* [cd-staging deployer](https://cd-staging.gds-reliability.engineering/teams/main/pipelines/deploy)
+* [cd-production deployer](https://cd.gds-reliability.engineering/teams/main/pipelines/deploy)
+
+Both staging and production deployments are based on the terraform modules that can be found in [tech-ops/reliability-engineering repository][tech-ops].
+
+## Access restrictions
+
+The Concourse only allows access from the [GDS Internal IP
+Network](https://sites.google.com/a/digital.cabinet-office.gov.uk/gds-internal-it/news/whitechapel-sourceipaddresses?pli=1)
+which means you may need to be on VPN to access the UI.
+
+## Support
+
+### Support hours
+
+The Automate team offer in hours support. Any issues out of hours will be recorded and handled during work hours.
+
+### Support process and tasks
+
+- Keep interruptible documentation up to date
+- Support users on the `#re-cd-ops` and `#reliability-eng` slack channels
+- Maintain a secure and reliable service level
+
+## Reliability
+
+### User expectations
+
+The most important events for our users are:
+
+- their deployment pipelines are available
+- their jobs are executing in a timely manor
+
+We also consider the following important but not as critical for our users:
+
+- access to the monitoring dashboards
+- the ability to have changes to the scale of the team's worker pool reviewed and merged promptly
+
+Note, these lists may not be exclusive and are expected to change as our system develops.
+
+### Service Level Indicators and Objectives (SLIs and SLOs)
+
+We need to define clear SLIs/SLOs for the concourse service, it is currently best effort.
+
+[cd]: https://cd.gds-reliability.engineering/
+[adrs]: https://github.com/alphagov/tech-ops-private/tree/master/reliability-engineering/adr
+[tech-ops]: https://github.com/alphagov/tech-ops/tree/master/reliability-engineering
+[internals]: https://concourse-ci.org/internals.html
+[auth]: https://concourse-ci.org/auth.html
+
