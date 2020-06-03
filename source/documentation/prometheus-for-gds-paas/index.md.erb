@@ -390,18 +390,18 @@ Check the [`govukobserve-targets-production` S3 targets bucket](https://s3.conso
 
 If there are files in the targets bucket then:
 
-1. Check the [Prometheus logs][] for errors.
+1. Check the [Prometheus logs] for errors.
 2. SSH onto Prometheus and check if the target files exist on the instance.
 
 If there are no files in the targets bucket then:
 
-1. Check the [service broker logs][] for errors.
+1. Check the [service broker logs] for errors.
 2. Check the `prometheus-service-broker` and `prometheus-target-updater` are running by logging into the PaaS `prometheus-production` space.
 
 #### Links
 
-- [service broker logs](https://kibana.logit.io/s/8fd50110-7b0c-490a-bedf-7544daebbec4/app/kibana#/discover)
-- [Prometheus logs](https://kibana.logit.io/s/8fd50110-7b0c-490a-bedf-7544daebbec4/app/kibana#/discover)
+- [service broker logs]
+- [Prometheus logs]
 - [Grafana: Prometheus](https://grafana-paas.cloudapps.digital/d/G-AIv9dmz)
 - [Grafana: Service broker](https://grafana-paas.cloudapps.digital/d/JFAHBG1ik)
 - [Alert definition](https://github.com/alphagov/prometheus-aws-configuration-beta/search?q=RE_Observe_No_FileSd_Targets)
@@ -413,12 +413,12 @@ If there are no files in the targets bucket then:
 The current number of Prometheis running in production has gone below two.
 
 1. Check the status of the Prometheus instances in EC2.
-1. Check the [Prometheus logs][] for errors.
+1. Check the [Prometheus logs] for errors.
 1. Check the [prometheus deployment pipeline](https://cd.gds-reliability.engineering/teams/autom8/pipelines/prometheus).
 
 #### Links
 
-- [Prometheus logs](https://kibana.logit.io/s/8fd50110-7b0c-490a-bedf-7544daebbec4/app/kibana#/discover)
+- [Prometheus logs]
 - [Grafana: Prometheus](https://grafana-paas.cloudapps.digital/d/G-AIv9dmz)
 - [Alert definition](https://github.com/alphagov/prometheus-aws-configuration-beta/search?q=RE_Observe_Prometheus_Below_Threshold)
 
@@ -598,3 +598,8 @@ Beta [Previous docs](https://docs.google.com/document/d/1FFT6lqOknXNYfGYptTJ8E-8
 - Fixed meshing across the Alertmanagers
 - Migrated Alertmanagers to Fargate
 - Made Alertmanagers continously deployed via Concourse
+
+
+
+[Prometheus logs]: https://kibana.logit.io/s/8fd50110-7b0c-490a-bedf-7544daebbec4/app/kibana#/discover
+[service broker logs]: https://kibana.logit.io/s/8fd50110-7b0c-490a-bedf-7544daebbec4/app/kibana#/discover
