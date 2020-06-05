@@ -259,7 +259,7 @@ These are requested by PR in the `tech-ops-private` repository, which is availab
     * Update the `TEAM` param and the name of the job
     * Set `MINIMUM_HEALTHY` as appropriate - this is passed into `awsc`'s `--min-healthy-percent` parameter. If the team has multiple worker nodes it can be set above 0%.
 
-Then when reviewing such requests, ensure they are sized appropriately and don't include a new subnet where they don't need to. Ensure the permissions are set up correctly and the requesting team knows the implications of the permissions chosen. It will be continuously deployed by the `deploy` pipeline in the `main` team, after passing through the staging deployment.
+Then when reviewing such requests, ensure they are sized appropriately and don't include a new subnet where they don't need to. Ensure the permissions are set up correctly and the requesting team knows the implications of the permissions chosen. It will be continuously deployed by the [deploy](https://cd.gds-reliability.engineering/teams/main/pipelines/deploy) pipeline, after passing through the staging deployment.
 
 ## AWS Account Actions
 
