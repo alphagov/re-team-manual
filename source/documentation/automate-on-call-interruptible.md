@@ -259,13 +259,7 @@ These are requested by PR in the `tech-ops-private` repository, which is availab
     * Update the `TEAM` param and the name of the job
     * Set `MINIMUM_HEALTHY` as appropriate - this is passed into `awsc`'s `--min-healthy-percent` parameter. If the team has multiple worker nodes it can be set above 0%.
 
-Then when reviewing such requests, ensure they are sized appropriately and don't include a new subnet where they don't need to. Ensure the permissions are set up correctly and the requesting team knows the implications of the permissions chosen. To apply the change:
-
-* `gds aws techops terraform apply -target=module.concourse_keys -target=module.concourse_base -target=module.concourse_web`
-* `gds aws techops terraform apply`
-* Replace the web nodes by installing https://github.com/alphagov/awsc and running `gds aws techops -- awsc autoscaling migrate cd-concourse-web -m 50` - this should allow the new team's workers to connect.
-* Now use the `pipelines/deploy-info-pipeline.sh` script to set the `info` pipeline in the team. It should run successfully.
-* Now use `fly -t cd-main set-pipeline -p roll-instances -c reliability-engineering/terraform/deployments/gds-tech-ops/cd-main/pipelines/roll-instances.yml` to set the `roll-instances` pipeline in the main team. It should run successfully the next day.
+Then when reviewing such requests, ensure they are sized appropriately and don't include a new subnet where they don't need to. Ensure the permissions are set up correctly and the requesting team knows the implications of the permissions chosen. It will be continuously deployed by the `deploy` pipeline in the `main` team, after passing through the staging deployment.
 
 ## AWS Account Actions
 
