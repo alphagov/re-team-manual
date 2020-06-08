@@ -247,7 +247,7 @@ Otherwise, the cause of the issue might be [an upstream bug](https://github.com/
 
 These are requested by PR in the `tech-ops-private` repository, which is available to everyone in the alphagov GitHub organisation:
 
-* First, update the list of teams in in `infra.tf`
+* First, update the list of teams in `infra.tf`
 * Create a new file forked from `reliability-engineering/terraform/deployments/gds-tech-ops/cd/team-autom8.tf`
     * Replace all the references to `autom8` with the name of the new team
     * Replace the `re-autom8` owner team with as many new owner GitHub teams as required, but remember to leave `re-common-cloud` on the list.
@@ -258,6 +258,9 @@ These are requested by PR in the `tech-ops-private` repository, which is availab
     * Copy an existing one
     * Update the `TEAM` param and the name of the job
     * Set `MINIMUM_HEALTHY` as appropriate - this is passed into `awsc`'s `--min-healthy-percent` parameter. If the team has multiple worker nodes it can be set above 0%.
+* Update `reliability-engineering/terraform/deployments/gds-tech-ops/cd/deploy-info-pipelines.yml`
+    * Copy an existing team in the `pipeline` resource source, change the `name` but leave `username` and `password` the same.
+    * Copy an existing `put` step in the `deploy-info-pipelines` job, change the `team` but leave the `name` and `config_file` the same.
 
 Then when reviewing such requests, ensure they are sized appropriately and don't include a new subnet where they don't need to. Ensure the permissions are set up correctly and the requesting team knows the implications of the permissions chosen. It will be continuously deployed by the `deploy` pipeline in the `main` team, after passing through the staging deployment.
 
