@@ -149,5 +149,4 @@ bootstrap role from their gds-users identity to gain admin access.
 
 #### Put the yubikeys back in the safe!!!
 
-Or daddy will be cross!
-
+The work is not complete until the yubikey is secured back in the safe.
