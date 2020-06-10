@@ -138,9 +138,32 @@ UKCloud emergency email: support@UKCloud.com
 
 UKCloud Technical Account Manager: Brendan O'Connell boconnell@ukcloud.com +44 7825 709 673
 
-#### Carrenza
+#### Carrenza (6 degrees)
 
-Carrenza emergency number: 020 7858 403
+##### General support and emergencies
+
+Carrenza/6dg Cloud Support portal: [https://6dg.service-now.com/cp/](https://6dg.service-now.com/cp/)
+
+Carrenza/6dg Cloud 24/7 Support landline: +44 20 7858 4032 (UK) or +31 20 888 5041 (NL)
+
+Carrenza/6dg switchboard (if you are unable to reach support on the numbers
+above): 0800 012 8070 or +44 20 7858 4010 and select option 4
+
+##### Carrenza/6dg Account Manager
+
+    David Jackson
+    Business Development Manager ‑ Public Sector
+    Tel: 0207 858 4620
+    Mob: 07342881898
+    Email: david.jackson@6dg.co.uk
+
+##### Carrenza/6dg Client Service Manager
+
+    Chris Piper
+    Public Sector CSM Team Lead
+    Tel: 02078584964
+    Mob: 07702875689
+    Email: chris.piper@6dg.co.uk
 
 #### Avien Elasticsearch
 
