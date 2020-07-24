@@ -31,7 +31,7 @@ apply out of hours; Alertmanager won't directly page reliability
 engineering. On occasion it may also be the result of a cyber security
 escalation.
 
-[Concourse](https://deployer.tools.signin.service.gov.uk/teams/main/pipelines/deploy-verify-hub)
+[Concourse](https://cd.gds-reliability.engineering/teams/verify/pipelines/deploy-verify-hub)
 deploys the Hub to ECS (one cluster per application) on EC2 (i.e. not ECS on
 Fargate). Reliability engineering only offer out-of-hours support for the
 production services. Some useful links:
@@ -58,13 +58,13 @@ in non-production environments. Examples:
   integration or staging)
 * machine reboots (prometheus only; all other non-tools environment machines are
   routinely rebuilt by
-  [concourse](https://deployer.tools.signin.service.gov.uk/teams/main/pipelines/deploy-verify-hub?group=instance-rolling))
+  [concourse](https://cd.gds-reliability.engineering/teams/verify/pipelines/deploy-verify-hub))
 
 Some useful links:
 
-* [Verify concourse](https://deployer.tools.signin.service.gov.uk)
+* [Verify concourse team](https://cd.gds-reliability.engineering/?search=team%3A%20verify)
 * [smoke
-  tests](https://deployer.tools.signin.service.gov.uk/teams/main/pipelines/smoketests)
+  tests](https://cd.gds-reliability.engineering/teams/verify/pipelines/smoketests)
 
 Relevant gds-cli aws account names:
 
