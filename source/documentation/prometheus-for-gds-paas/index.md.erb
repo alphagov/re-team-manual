@@ -497,6 +497,25 @@ blue-green deployed apps even after the old (also known as venerable) applicatio
 - [Prometheus targets](https://prom-1.monitoring.gds-reliability.engineering/targets)
 - [Alert definition](https://github.com/alphagov/prometheus-aws-configuration-beta/search?q=RE_Observe_Target_Down)
 
+#### Useful commands
+
+Some useful commands that may help when tidying up these targets that are no longer present in the PaaS:
+
+```
+# to download targets for Ireland (eu-west-1)
+gds aws re-prom-prod -- aws s3 sync s3://govukobserve-targets-production .
+
+# to upload targets for ireland
+# note: this command will remove any targets that have been added to the bucket since the above command was run
+gds aws re-prom-prod -- aws s3 sync --delete . s3://govukobserve-targets-production
+
+# for London (eu-west-2)
+gds aws re-prom-prod -- aws s3 sync s3://govukobserve-london-targets-production .
+
+# note: this command will remove any targets that have been added to the bucket since the above command was run
+gds aws re-prom-prod -- aws s3 sync --delete . s3://govukobserve-london-targets-production
+```
+
 ### RE_Observe_Grafana_Down
 
 <%= partial 'documentation/prometheus-for-gds-paas/support_blurb.md.erb' %>
