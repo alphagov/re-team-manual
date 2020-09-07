@@ -36,7 +36,7 @@ We came up with:
 
 We think that from here we can use the `increase` function to tell us how many times alerts have begun firing. To use this we think we would need to use recording rules as per https://www.robustperception.io/composing-range-vector-functions-in-promql to turn our query into a single range vector.
 
-At that point we should have a number for how many alerts have begun firing in a given time period. However we are not confident that this number is equal to the number of pagerduty incidents we expect to be created. The reason for this is because Alertmanager [groups firing alerts](https://prometheus.io/docs/alerting/alertmanager/#grouping), meaning multiple firing alerts may only result in one notification and therefore one incident. A potential way around this would be to try and edit the grouping behaviour of Alertmanager using it's config but it [doesn't look it's possible to turn it off completely](https://groups.google.com/forum/#!topic/prometheus-users/35znfrwu_z8). There could also be issues if an alert fires, then resolves itself, and then fires immediately after only triggering an single incident.
+At that point we should have a number for how many alerts have begun firing in a given time period. However we are not confident that this number is equal to the number of pagerduty incidents we expect to be created. The reason for this is because Alertmanager [groups firing alerts](https://prometheus.io/docs/alerting/alertmanager/#grouping), meaning multiple firing alerts may only result in one notification and therefore one incident. A potential way around this would be to try and edit the grouping behaviour of Alertmanager using it's config but it [does not look it's possible to turn it off completely](https://groups.google.com/forum/#!topic/prometheus-users/35znfrwu_z8). There could also be issues if an alert fires, then resolves itself, and then fires immediately after only triggering an single incident.
 
 #### Decision
 
@@ -44,4 +44,4 @@ We have decided not to try and implement this SLI at the moment as we are not co
 
 #### Consequences
 
-We do not measure one of our main user journeys accurately and thus can't alert if there are problems with it. We may instead have to use a proxy or measure individual components that make up the user journey instead which may be easier to measure but less accurate.
+We do not measure one of our main user journeys accurately and thus cannot alert if there are problems with it. We may instead have to use a proxy or measure individual components that make up the user journey instead which may be easier to measure but less accurate.

@@ -10,8 +10,8 @@ Accepted
 
 Verify employ egress proxies to control access to external resources.
 These are a security measure to help prevent data from being exfiltrated from within Verify.
-The Prometheus server will need access to external resources, notibly an Ubuntu APT mirror during the bootstrap process.
-The Prometheus server should not setup it's own routes to bypass the egress proxy i.e. use a NAT gateway or Elastic IP, as this will potentially open up a route for data exfiltration.
+The Prometheus server will need access to external resources, notably an Ubuntu APT mirror during the bootstrap process.
+The Prometheus server should not set up its own routes to bypass the egress proxy by using a NAT gateway or Elastic IP, as this will potentially open up a route for data exfiltration.
 
 #### Decision
 

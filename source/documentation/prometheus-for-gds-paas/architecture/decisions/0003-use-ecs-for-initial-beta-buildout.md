@@ -15,7 +15,7 @@ covered in ADR #12.
 #### Context
 
 Existing self-hosted infrastructure at GDS has been managed in code
-using tools like puppet, but in a somewhat ad hoc way with each team
+using tools like puppet, but in a somewhat unplanned way with each team
 doing things differently, little sharing of code, and much reinvention
 of wheels.  We would like to learn about other ways of deploying
 infrastructure which encourage consistency: in terms of code

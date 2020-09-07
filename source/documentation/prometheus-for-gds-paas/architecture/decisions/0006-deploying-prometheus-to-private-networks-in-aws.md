@@ -23,9 +23,9 @@ Our existing prometheus infrastructure (for PaaS teams) works by using
 our [service broker][] to generate file_sd_configs which prometheus
 then uses to scrape PaaS apps over the public internet.
 
-This approach won't work for non-PaaS teams, because it's based on an
+This approach will not work for non-PaaS teams, because it's based on an
 assumption – that every app is directly routable from the public
-internet – that doesn't hold in non-PaaS environments.  Instead, apps
+internet – that does not hold in non-PaaS environments.  Instead, apps
 live on private networks and public access is controlled by firewalls
 and load balancers.
 
@@ -36,7 +36,7 @@ and load balancers.
 As the previous section explained, our main problem is that we want a
 prometheus (provided by us) to be able to scrape apps and other
 endpoints (owned by the client team, and living on a private network).
-We want to do this in a way which doesn't require clients to
+We want to do this in a way which does not require clients to
 unnecessarily expose metrics endpoints to the public internet.
 
 Some other things we would like to be able to do are:
@@ -72,7 +72,7 @@ The artefact we provide could take several forms:
  - a terraform module which the client team includes in their own
    terraform project
 
-This model has the downside that it doesn't allow us to maintain
+This model has the downside that it does not allow us to maintain
 prometheus at a single common version, because we are at the mercy of
 client teams' deploy cadences to ensure things get upgraded.
 
@@ -146,7 +146,7 @@ peering connections to maintain.
 
 As RE (and techops more broadly) provides more services, client teams
 end up having to consider more VPC Peering connections in their
-security analyses, and this doesn't feel like a particularly scalable
+security analyses, and this does not feel like a particularly scalable
 way for us to offer services to client teams.
 
 Finally, we believe that VPC Peering is something that has to be
@@ -176,7 +176,7 @@ In this scenario, we would build a single prometheus in its own VPC
 for each client team VPC we offer the service to.
 
 This avoids some of the drawbacks of the previous case, in that the
-prometheus doesn't have privileges to access multiple separate VPCs.
+prometheus does not have privileges to access multiple separate VPCs.
 
 [VPC Peering]: https://docs.aws.amazon.com/AmazonVPC/latest/PeeringGuide/Welcome.html
 
@@ -224,7 +224,7 @@ However it has some drawbacks:
 
 #### Consequences
 
-We haven't yet solved the problem of how client teams provide alert
+We have not yet solved the problem of how client teams provide alert
 configuration to prometheus.
 
 For the moment, it is acceptable to define configuration in
