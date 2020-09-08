@@ -8,7 +8,7 @@ Accepted.
 
 #### Context
 
-We wanted to gather metrics from our own infrastructure so that we can drive alerts when things go wrong. Amazon exposes platform-level metrics via CloudWatch.
+We wanted to gather metrics from our own infrastructure so that we can drive alerts when things go wrong. Amazon exposes platform-level metrics through CloudWatch.
 Prometheus provides a [cloudwatch_exporter](https://github.com/prometheus/cloudwatch_exporter) which makes these metrics available to prometheus.
 
 We had a [spike](https://github.com/alphagov/prometheus-aws-configuration-beta/tree/cloudwatch) to see if we could use the Cloudwatch exporter to get Cloudwatch metrics and trigger alerts.
@@ -26,8 +26,8 @@ Based on a simple assumption of 100 metrics requested, being scraped once every 
 
 `100 x 6 x 24 x 365 x $0.00001 x 10 = $525.6 per year`
 
-However if we wish to scrape at the same rate we would a normal target, e.g. 30
-seconds that would become roughly $10,500 per year.
+However if we wish to scrape at the same rate we would a normal target, for example 30
+seconds, that would become roughly $10,500 per year.
 
 100 metrics also appears to be unlikely. Based on asking for just these ALB and EBS
 metrics:
@@ -46,8 +46,8 @@ we appear to be requesting roughly 4000 metrics per scrape. If we scraped our cu
 
 By requesting only ALB metrics in the dev accounts, we still produce about 160 API requests according to the `cloudwatch_requests_total` counter for each scrape. Somewhat strangely, this only returns about 30 timeseries so we are not sure if our config is incorrect and if the number of API calls could be reduced to closer match the number of timeseries.
 
-Note, as dev accounts have lots of resources e.g. volumes, there may be fewer
-metrics requested for staging and prod as unlike the dev account we wouldn't be
+Note, as dev accounts have lots of resources, for example volumes, there may be fewer
+metrics requested for staging and prod as unlike the dev account we would not be
 exporting metrics for other stacks.
 
 It takes a long time to get a response from the /metrics endpoint as it needs to make many API calls. This causes slow response times for which our prometheus scrape config needs to allow for using the `scrape_timeout` setting.
@@ -76,6 +76,6 @@ This has however been fixed in [this commit](https://github.com/alphagov/prometh
 
 No alert is raised but the failure is no longer silent as Prometheus will no longer run without an attached EBS volume.
 
-We also don't have metrics available for ALBs and other parts of our AWS infrastructure.
+We also do not have metrics available for ALBs and other parts of our AWS infrastructure.
 
 We need to explore other solutions to get these metrics that are more cost-efficient.

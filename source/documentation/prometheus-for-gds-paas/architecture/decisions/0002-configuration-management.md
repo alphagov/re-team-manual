@@ -13,7 +13,7 @@ actively developed.
 #### Context
 
 We have the requirement of adding some resources to the base cloud instances. We currently do
-this via the [cloud.conf](https://github.com/alphagov/prometheus-aws-configuration/blob/375f34600e373aa0e4c66fcae032ceee361d8c21/terraform/modules/prometheus/cloud.conf) system. This presents us with some limitations, such as configuration
+this using the [cloud.conf](https://github.com/alphagov/prometheus-aws-configuration/blob/375f34600e373aa0e4c66fcae032ceee361d8c21/terraform/modules/prometheus/cloud.conf) system. This presents us with some limitations, such as configuration
 being limited to 16kb, duplication in each instance terraform and a lack of fast feedback testing.
 
 #### Decision
@@ -30,5 +30,5 @@ Our puppet manifests can be reused both within tools and possibly other programs
 
 It's worth noting we will still need a basic cloud.conf file to install and run the puppet agent but this
 will be minimal and reusable in each of our terraform projects. There is also the risk that people will
-put more in the puppet code than they should. This will be remediated via review of
+put more in the puppet code than they should. This will be remediated by review of
 architecture and code.

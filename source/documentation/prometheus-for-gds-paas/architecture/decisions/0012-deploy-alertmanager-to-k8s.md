@@ -14,8 +14,8 @@ There is a long-term goal that teams in GDS should avoid running bespoke infrast
 
 We also have a desire to migrate off ECS.  ECS is painful for running alertmanager because:
 
-  - ECS doesn't support dropping configuration files in place
-  - ECS doesn't support exposing multiple ports via load balancer for service discovery
+  - ECS does not support dropping configuration files in place
+  - ECS does not support exposing multiple ports using load balancer for service discovery
 
 Kubernetes does not have either of these limitations.
 
@@ -25,7 +25,7 @@ Currently, we have a plan to migrate everything to EC2, in order to get away fro
   - we have two different code styles, related to the above
   - we have two different types of infrastructure
 
-We haven't fully planned out how we would migrate alertmanager to EC2, but we suspect it would involve at least the following tasks:
+We have not fully planned out how we would migrate alertmanager to EC2, but we suspect it would involve at least the following tasks:
 
   - create a way of provisioning an EC2 instance with alertmanager installed (probably a stock ubuntu AMI with cloud.conf to install software)
   - create a way of deploying that instance with configuration added (probably a terraform module similar to what we have for prometheus)
@@ -34,7 +34,7 @@ We haven't fully planned out how we would migrate alertmanager to EC2, but we su
   - once we're confident, switch off the ECS alertmanagers
   - tidy up the old ECS alertmanager code
 
-This feels like a lot of work, especially if our longer-term goal is that we shouldn't run bespoke infrastructure and should instead run in some common way such as the new platform.
+This feels like a lot of work, especially if our longer-term goal is that we should not run bespoke infrastructure and should instead run in some common way such as the new platform.
 
 Nevertheless, we could leave alertmanager in ECS but still ease some of the pain by refactoring the terraform code to be the new module-style instead of the old project-and-Makefile style, even if we leave alertmanager itself in ECS.
 
