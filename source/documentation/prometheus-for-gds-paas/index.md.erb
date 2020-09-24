@@ -538,6 +538,27 @@ Check:
 
 - [Alert definition](https://github.com/alphagov/prometheus-aws-configuration-beta/search?q=RE_Observe_Grafana_Down)
 
+### RE_Observe_No_Successful_Updates
+
+<%= partial 'documentation/prometheus-for-gds-paas/support_blurb.md.erb' %>
+
+A region's `gds-prometheus` service broker hasn't successfully performed a target update
+in 12 hours. This could mean that something is preventing the process completing in a
+particular region, e.g. an authentication issue.
+
+#### Useful things to check
+
+- Is the broker's `/update-targets` endpoint serving any requests at all? If there aren't
+even any 500s, the broker app's `clock` process could have stopped hitting the trigger.
+- Is the connection & authentication with S3 working?
+- Is communication with the cloudfoundry API working?
+
+#### Links
+
+- [service broker logs]
+- [Prometheus targets](https://prom-1.monitoring.gds-reliability.engineering/targets)
+- [Alert definition](https://github.com/alphagov/prometheus-aws-configuration-beta/search?q=RE_Observe_No_Successful_Updates)
+
 ## Runbook
 
 ### There is a problem with the monitoring service (Prometheus or Alert Manager)
