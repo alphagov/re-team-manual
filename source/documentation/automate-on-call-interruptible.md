@@ -32,8 +32,8 @@ engineering. On occasion it may also be the result of a cyber security
 escalation.
 
 [Concourse](https://cd.gds-reliability.engineering/teams/verify/pipelines/deploy-verify-hub)
-deploys the Hub to ECS (one cluster per application) on EC2 (i.e. not ECS on
-Fargate). Reliability engineering only offer out-of-hours support for the
+deploys the Hub to ECS (one cluster per application) on Fargate (i.e. not ECS on
+EC2). Reliability engineering only offer out-of-hours support for the
 production services. Some useful links:
 
 * [verify-infrastructure
