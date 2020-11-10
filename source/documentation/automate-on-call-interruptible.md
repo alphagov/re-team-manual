@@ -257,6 +257,16 @@ These are requested by PR in the `tech-ops-private` repository, which is availab
 
 Then when reviewing such requests, ensure they are sized appropriately and don't include a new subnet where they don't need to. Ensure the permissions are set up correctly and the requesting team knows the implications of the permissions chosen. It will be continuously deployed by the [deploy](https://cd.gds-reliability.engineering/teams/main/pipelines/deploy) pipeline, after passing through the staging deployment.
 
+#### Redacting build logs
+
+If someone runs a build on concourse that outputs a bunch of sensitive information, this will then end up being saved in concourse's build logs. And this may be considered and incident worth acting on.
+
+In most cases the best action is to simply delete the pipeline with `fly destroy-pipeline` and re-create it. This can be done by the pipeline owner themselves.
+
+If the task was launched using `fly execute` however, this will not work and the logs will have to be redacted manually. As there is not (currently) an in-built way of deleting a specific build's logs, you will have to remove the offending data by hand from concourse's underlying postgresql database where it is stored.
+
+The recommended way of accessing this database is through connecting to one of the `concourse-web` instances via the AWS console and running `psql` using the credentials found in the file `/etc/systemd/system/concourse-web.service`. Once in the database, use the `builds` table to find the `build_id` of the target build (this is _not_ the same thing as "build #" as presented to the user). One way to do this is to deduce it from the `builds.create_time` field. The build logs themselves can be found as rows in tables named e.g. `pipeline_build_events_*`. Once you've found the relevant table(s), these rows should be safely deletable using a command such as `DELETE FROM pipeline_build_events_33 WHERE build_id=144160;`.
+
 ## AWS Account Actions
 
 ### Interruptible
