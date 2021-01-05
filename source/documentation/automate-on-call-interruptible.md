@@ -247,7 +247,7 @@ Otherwise, the cause of the issue might be [an upstream bug](https://github.com/
 
 These are requested by PR in the `tech-ops-private` repository, which is available to everyone in the alphagov GitHub organisation:
 
-* First, update the list of teams in `infra.tf`
+* First, update the list of teams in `reliability-engineering/terraform/deployments/gds-tech-ops/cd/site.tf`
 * Create a new file forked from `reliability-engineering/terraform/deployments/gds-tech-ops/cd/team-autom8.tf`
     * Replace all the references to `autom8` with the name of the new team
     * Replace the `re-autom8` owner team with as many new owner GitHub teams as required, but remember to leave `re-common-cloud` on the list.
