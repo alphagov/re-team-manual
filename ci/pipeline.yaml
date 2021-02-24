@@ -1,0 +1,66 @@
+resources:
+  - name: re-team-manual-git
+    type: git
+    source:
+      uri: https://github.com/alphagov/re-team-manual.git
+      branch: master
+
+  - name: deploy-to-paas-docs-space
+    type: cf
+    source:
+      api: https://api.cloud.service.gov.uk
+      username: ((cf_user))
+      password: ((cf_password))
+      organization: gds-tech-ops
+      space: docs
+jobs:
+  - name: self-update
+    serial: true
+    plan:
+    - get: re-team-manual-git
+      trigger: true
+    - set_pipeline: re-team-manual
+      file: re-team-manual-git/ci/pipeline.yaml
+
+  - name: build-re-team-manual
+    public: true
+    serial: true
+    plan:
+      - get: re-team-manual-git
+        trigger: true
+      - task: bundle-re-team-manual
+        timeout: 15m
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: ghcr.io/alphagov/aws-ruby
+              tag: 2.6.1
+          inputs:
+            - name: re-team-manual-git
+              path: repo
+          outputs:
+            - name: bundled
+          run: &bundle
+            path: sh
+            dir: repo
+            args:
+            - -c
+            - |
+              # install node
+              VERSION=v12.16.3
+              mkdir -p /usr/local/lib/nodejs
+              wget https://nodejs.org/dist/v12.16.3/node-$VERSION-linux-x64.tar.xz
+              tar -xJvf node-$VERSION-linux-x64.tar.xz -C /usr/local/lib/nodejs
+              export PATH="/usr/local/lib/nodejs/node-$VERSION-linux-x64/bin:$PATH"
+              # build
+              bundle install --without development
+              bundle exec middleman build
+              cp manifest.yml ../bundled/manifest.yml
+              cp -r build/* ../bundled/
+      - put: deploy-to-paas-docs-space
+        params:
+          manifest: bundled/manifest.yml
+          show_app_log: true
+          path: bundled
