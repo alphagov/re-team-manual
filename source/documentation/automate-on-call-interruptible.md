@@ -251,7 +251,7 @@ These are requested by PR in the `tech-ops-private` repository, which is availab
   Do not add part way through the list as Terraform may decide to start re-creating other roles which could cause an incident.
 * Create a new file forked from `reliability-engineering/terraform/deployments/gds-tech-ops/cd/team-autom8.tf`
     * Replace all the references to `autom8` with the name of the new team
-    * Replace the `re-autom8` owner team with as many new owner GitHub teams as required, but remember to leave `re-common-cloud` on the list.
+    * Replace the `re-autom8` owner team with as many new owner GitHub teams as required, but remember to leave `re-common-cloud` on the `viewers` list and `re-cd-temporary-owners` on the `owners` list.
     * In addition to `owners` and `members`, `pipeline_operators` and `viewers` may be specified.
     * Set the `desired_capacity` attribute of the `concourse-worker-pool` module as appropriate, and optionally set the `instance_type` attribute too (default is `t3.small`).
     * By default every team's workers runs in the same subnet and gets the same egress IP. Where it is a requirement that egress IPs be used only by a specific team, that team may be given its own subnet and NAT Gateway, as is done for e.g. the `gsp` team. We do not do this purely for AWS Role SourceIp Conditions, as the Principal will already be unique to the right team's worker group. They may be provided for cases like SSH. These cost more money.
