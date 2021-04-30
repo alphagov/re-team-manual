@@ -268,6 +268,15 @@ If the task was launched using `fly execute` however, this will not work and the
 
 The recommended way of accessing this database is through connecting to one of the `concourse-web` instances via the AWS console and running `psql` using the credentials found in the file `/etc/systemd/system/concourse-web.service`. Once in the database, use the `builds` table to find the `build_id` of the target build (this is _not_ the same thing as "build #" as presented to the user). One way to do this is to deduce it from the `builds.create_time` field. The build logs themselves can be found as rows in tables named e.g. `pipeline_build_events_*`. Once you've found the relevant table(s), these rows should be safely deletable using a command such as `DELETE FROM pipeline_build_events_33 WHERE build_id=144160;`.
 
+#### Escalating permissions
+
+Certain people are authorised to, when necessary, assume `owner` level permissions in all teams. To trigger this:
+* Browse to https://cd.gds-reliability.engineering/teams/main/pipelines/temporary-owners-promoter
+* Select `promote-<username>` (if there is not one for your username, you are not authorised to do this).
+* Trigger Build using the usual plus button in the top right.
+* You may now need to log out of Concourse and log back in. You may need to repeat this process with fly.
+* When you are done, either trigger a build of `demote-<username>`, or `demote-all-owners`. If you forget, `demote-all-owners` runs daily anyway.
+
 ## gds-users
 
 ### Interruptible
