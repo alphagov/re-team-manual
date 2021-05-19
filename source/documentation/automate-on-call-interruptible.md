@@ -216,6 +216,8 @@ repository.
 Useful links:
 
 * [Multi-tenant concourse](https://cd.gds-reliability.engineering/)
+* [Concourse grafana](https://grafana.monitoring.cd.gds-reliability.engineering/)
+* [Concourse prometheus](https://prom-1.monitoring.cd.gds-reliability.engineering/)
 * [tech-ops repository](https://github.com/alphagov/tech-ops)
 * [tech-ops-private repository](https://github.com/alphagov/tech-ops-private)
 
