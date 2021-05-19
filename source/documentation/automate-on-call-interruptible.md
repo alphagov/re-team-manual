@@ -245,6 +245,25 @@ You can check that their workers are working okay by running other jobs (e.g. th
 
 Otherwise, the cause of the issue might be [an upstream bug](https://github.com/concourse/concourse/issues/844#issuecomment-416745367). The normal workaround for this seems to be deleting (`fly -t cd-team-name destroy-pipeline -p bad-pipeline`) and re-creating (`fly -t cd-team-name set-pipeline -p bad-pipeline -c pipeline.yml`) the pipeline - but note it may be advisable to run set-pipeline first to look at the diff you'll be creating when you set the pipeline again - it may be necessary to set variables, and pipelines that self-update should contain some clues as to where to get those variables from. This process should be performable by the affected team.
 
+#### Secrets over-requesting
+
+Even with caching enabled, concourse can make heavy use of its secrets backend, in our
+case AWS SSM Parameter Store. Parameter Store with its default settings has a rate limit
+of 40 transactions per second. Occasionally concourse usage surges may hit this limit,
+resulting in build failures with concourse complaining it's unable to interpolate a task
+config. Note this will only happen after it has already retried a number of times. As a
+temporary fix it's possible to [increase our account's rate limit allowance](https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-throughput.html#parameter-store-throughput-increasing-cli)
+to 100 transactions per second, though last time we did this it cost us ~$10 a day, so we
+try to avoid that.
+
+A [splunk dashboard](https://gds.splunkcloud.com/en-GB/app/gds-010-techops/concourse_secrets)
+exists to monitor teams secrets usage.
+
+The way concourse's SSM secrets backend currently works, there are a few known situations
+where secrets usage gets artificially amplified - in particular, repeated accesses to
+non-existent secrets. So it's sometimes a good idea to keep an eye on these and make
+teams aware that they might have a broken pipeline that's causing us problems.
+
 #### Creating a new team
 
 These are requested by PR in the `tech-ops-private` repository, which is available to everyone in the alphagov GitHub organisation:
