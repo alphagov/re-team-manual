@@ -274,7 +274,7 @@ The recommended way of accessing this database is through connecting to one of t
 
 Certain people are authorised to, when necessary, assume `owner` level permissions in all teams. To trigger this:
 * Browse to https://cd.gds-reliability.engineering/teams/main/pipelines/temporary-owners-promoter
-* Select `promote-<username>` (if there is not one for your username, you are not authorised to do this).
+* Select `promote-<username>` (if there is not one for your username, you are not authorised to do this, or the `update-pipeline` job hasn't run since you were given that permission).
 * Trigger Build using the usual plus button in the top right.
 * You may now need to log out of Concourse and log back in. You may need to repeat this process with fly.
 * When you are done, either trigger a build of `demote-<username>`, or `demote-all-owners`. If you forget, `demote-all-owners` runs daily anyway.
