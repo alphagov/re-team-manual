@@ -216,6 +216,8 @@ repository.
 Useful links:
 
 * [Multi-tenant concourse](https://cd.gds-reliability.engineering/)
+* [Concourse grafana](https://grafana.monitoring.cd.gds-reliability.engineering/)
+* [Concourse prometheus](https://prom-1.monitoring.cd.gds-reliability.engineering/)
 * [tech-ops repository](https://github.com/alphagov/tech-ops)
 * [tech-ops-private repository](https://github.com/alphagov/tech-ops-private)
 
@@ -242,6 +244,25 @@ Sometimes a team's pipeline will have jobs get stuck in a pending state and not 
 You can check that their workers are working okay by running other jobs (e.g. the info pipeline should be working). If this does not work, you may want to check that the team has healthy workers, you can see whether a worker is stalled or running by looking at `fly -t cd-main workers`. (`main` in this command can be replaced with any other team name, it is only used to find the correct Concourse instance, the team does not matter, all teams workers will be shown).
 
 Otherwise, the cause of the issue might be [an upstream bug](https://github.com/concourse/concourse/issues/844#issuecomment-416745367). The normal workaround for this seems to be deleting (`fly -t cd-team-name destroy-pipeline -p bad-pipeline`) and re-creating (`fly -t cd-team-name set-pipeline -p bad-pipeline -c pipeline.yml`) the pipeline - but note it may be advisable to run set-pipeline first to look at the diff you'll be creating when you set the pipeline again - it may be necessary to set variables, and pipelines that self-update should contain some clues as to where to get those variables from. This process should be performable by the affected team.
+
+#### Secrets over-requesting
+
+Even with caching enabled, concourse can make heavy use of its secrets backend, in our
+case AWS SSM Parameter Store. Parameter Store with its default settings has a rate limit
+of 40 transactions per second. Occasionally concourse usage surges may hit this limit,
+resulting in build failures with concourse complaining it's unable to interpolate a task
+config. Note this will only happen after it has already retried a number of times. As a
+temporary fix it's possible to [increase our account's rate limit allowance](https://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-store-throughput.html#parameter-store-throughput-increasing-cli)
+to 100 transactions per second, though last time we did this it cost us ~$10 a day, so we
+try to avoid that.
+
+A [splunk dashboard](https://gds.splunkcloud.com/en-GB/app/gds-010-techops/concourse_secrets)
+exists to monitor teams secrets usage.
+
+The way concourse's SSM secrets backend currently works, there are a few known situations
+where secrets usage gets artificially amplified - in particular, repeated accesses to
+non-existent secrets. So it's sometimes a good idea to keep an eye on these and make
+teams aware that they might have a broken pipeline that's causing us problems.
 
 #### Creating a new team
 
@@ -272,7 +293,7 @@ The recommended way of accessing this database is through connecting to one of t
 
 Certain people are authorised to, when necessary, assume `owner` level permissions in all teams. To trigger this:
 * Browse to https://cd.gds-reliability.engineering/teams/main/pipelines/temporary-owners-promoter
-* Select `promote-<username>` (if there is not one for your username, you are not authorised to do this).
+* Select `promote-<username>` (if there is not one for your username, you are not authorised to do this, or the `update-pipeline` job hasn't run since you were given that permission).
 * Trigger Build using the usual plus button in the top right.
 * You may now need to log out of Concourse and log back in. You may need to repeat this process with fly.
 * When you are done, either trigger a build of `demote-<username>`, or `demote-all-owners`. If you forget, `demote-all-owners` runs daily anyway.
